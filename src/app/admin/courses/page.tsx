@@ -5,6 +5,18 @@ import { Plus, Pencil, Trash } from "lucide-react";
 
 const prisma = new PrismaClient();
 
+
+type CourseWithCounts = {
+    id: string;
+    title: string;
+    price: number;
+    published: boolean;
+    _count: {
+        modules: number;
+        enrollments: number;
+    };
+};
+
 export default async function CoursesPage() {
     const courses = await prisma.course.findMany({
         orderBy: { createdAt: "desc" },
@@ -40,7 +52,7 @@ export default async function CoursesPage() {
                         </tr>
                     </thead>
                     <tbody className="divide-y divide-slate-200">
-                        {courses.map((course) => (
+                        {courses.map((course: CourseWithCounts) => (
                             <tr key={course.id} className="hover:bg-slate-50 transition-colors">
                                 <td className="px-6 py-4 font-medium text-slate-900">{course.title}</td>
                                 <td className="px-6 py-4 text-slate-600">${course.price}</td>
