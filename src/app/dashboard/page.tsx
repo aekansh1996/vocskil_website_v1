@@ -49,7 +49,7 @@ export default async function DashboardPage() {
 
             {enrolledCourses.length > 0 ? (
                 <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-                    {enrolledCourses.map((course) => (
+                    {enrolledCourses.map((course: any) => (
                         <Card key={course.id} className="overflow-hidden hover:shadow-md transition-shadow">
                             <div className="h-40 bg-slate-200 relative">
                                 {/* Placeholder for course image */}
