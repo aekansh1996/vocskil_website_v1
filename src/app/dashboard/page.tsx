@@ -7,6 +7,17 @@ import { PlayCircle } from "lucide-react";
 
 const prisma = new PrismaClient();
 
+
+type EnrollmentWithCourse = {
+    course: {
+        id: string;
+        title: string;
+        _count: {
+            modules: number;
+        };
+    };
+};
+
 export default async function DashboardPage() {
     const session = await auth();
 
@@ -27,7 +38,7 @@ export default async function DashboardPage() {
         }
     });
 
-    const enrolledCourses = user?.enrollments.map(e => e.course) || [];
+    const enrolledCourses = user?.enrollments.map((e: EnrollmentWithCourse) => e.course) || [];
 
     return (
         <div className="space-y-8">
