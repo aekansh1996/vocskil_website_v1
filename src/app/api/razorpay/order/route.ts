@@ -7,7 +7,7 @@ const prisma = new PrismaClient();
 
 export async function POST(req: Request) {
     try {
-        const session = await auth();
+        const session = await getServerSession(authOptions);
         const { courseId } = await req.json();
 
         if (!session || !session.user || !session.user.email) {

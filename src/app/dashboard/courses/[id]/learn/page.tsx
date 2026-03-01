@@ -5,7 +5,7 @@ import CoursePlayer from "@/components/learning/CoursePlayer";
 
 export default async function CourseLearnPage({ params }: { params: Promise<{ id: string }> }) {
     const { id } = await params;
-    const session = await auth();
+    const session = await getServerSession(authOptions);
     if (!session?.user) redirect("/login");
 
     const course = await prisma.course.findUnique({

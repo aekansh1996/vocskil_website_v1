@@ -1,26 +1,25 @@
-import NextAuth from "next-auth";
-import Credentials from "next-auth/providers/credentials";
-import { PrismaAdapter } from "@auth/prisma-adapter";
-import { PrismaClient } from "@prisma/client";
+import { prisma } from "@/lib/prisma";
+import { PrismaAdapter } from "@next-auth/prisma-adapter";
+import { NextAuthOptions } from "next-auth";
+import CredentialsProvider from "next-auth/providers/credentials";
 import bcrypt from "bcryptjs";
 
-const prisma = new PrismaClient();
-
-export const { handlers, auth, signIn, signOut } = NextAuth({
+export const authOptions: NextAuthOptions = {
+    adapter: PrismaAdapter(prisma),
     providers: [
-        Credentials({
+        CredentialsProvider({
             name: "Credentials",
             credentials: {
                 email: { label: "Email", type: "email" },
                 password: { label: "Password", type: "password" },
             },
-            authorize: async (credentials) => {
+            async authorize(credentials) {
                 if (!credentials?.email || !credentials?.password) {
                     return null;
                 }
 
                 const user = await prisma.user.findUnique({
-                    where: { email: credentials.email as string },
+                    where: { email: credentials.email },
                 });
 
                 if (!user) {
@@ -28,7 +27,7 @@ export const { handlers, auth, signIn, signOut } = NextAuth({
                 }
 
                 const isPasswordValid = await bcrypt.compare(
-                    credentials.password as string,
+                    credentials.password,
                     user.password
                 );
 
@@ -50,23 +49,23 @@ export const { handlers, auth, signIn, signOut } = NextAuth({
         }),
     ],
     callbacks: {
-        async jwt({ token, user }: { token: any, user: any }) {
+        async jwt({ token, user }) {
             if (user) {
-                token.role = user.role;
-                token.phone = user.phone;
-                token.college = user.college;
-                token.course = user.course;
-                token.studentId = user.studentId;
+                token.role = (user as any).role;
+                token.phone = (user as any).phone;
+                token.college = (user as any).college;
+                token.course = (user as any).course;
+                token.studentId = (user as any).studentId;
             }
             return token;
         },
-        async session({ session, token }: { session: any, token: any }) {
+        async session({ session, token }) {
             if (session.user) {
-                session.user.role = token.role as string;
-                session.user.phone = token.phone as string;
-                session.user.college = token.college as string;
-                session.user.course = token.course as string;
-                session.user.studentId = token.studentId as string;
+                (session.user as any).role = token.role as string;
+                (session.user as any).phone = token.phone as string;
+                (session.user as any).college = token.college as string;
+                (session.user as any).course = token.course as string;
+                (session.user as any).studentId = token.studentId as string;
             }
             return session;
         },
@@ -77,4 +76,5 @@ export const { handlers, auth, signIn, signOut } = NextAuth({
     session: {
         strategy: "jwt",
     },
-});
+    secret: process.env.NEXTAUTH_SECRET,
+};

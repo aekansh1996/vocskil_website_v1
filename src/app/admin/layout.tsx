@@ -1,4 +1,5 @@
-import { auth, signOut } from "@/auth";
+import { getServerSession } from "next-auth";
+import { authOptions } from "@/lib/auth-options";
 import { redirect } from "next/navigation";
 import Link from "next/link";
 import {
@@ -24,7 +25,8 @@ export default async function AdminLayout({
 }: {
     children: React.ReactNode;
 }) {
-    const session = await auth();
+    const session = await getServerSession(authOptions);
+    const sessionUser = session?.user as any;
 
     if (!session || session.user.role !== "ADMIN") {
         redirect("/login");
@@ -92,14 +94,11 @@ export default async function AdminLayout({
                             <UserIcon className="h-5 w-5" />
                         </div>
                         <div className="flex-1 min-w-0">
-                            <p className="text-xs font-bold text-white truncate">{session.user.name || 'Admin'}</p>
+                            <p className="text-xs font-bold text-white truncate">{sessionUser.name || 'Admin'}</p>
                             <p className="text-[10px] text-slate-500 truncate">System Administrator</p>
                         </div>
-                        <form action={async () => {
-                            "use server";
-                            await signOut({ redirectTo: "/login" });
-                        }}>
-                            <button className="text-slate-500 hover:text-red-400 transition-colors">
+                        <form action="/api/auth/signout" method="POST">
+                            <button type="submit" className="text-slate-500 hover:text-red-400 transition-colors">
                                 <LogOut className="h-4 w-4" />
                             </button>
                         </form>
@@ -133,9 +132,9 @@ export default async function AdminLayout({
                         <div className="h-8 w-[1px] bg-slate-200 mx-2"></div>
                         <Button variant="ghost" className="gap-2 px-2 text-slate-700 font-semibold">
                             <div className="w-8 h-8 rounded-full bg-indigo-100 flex items-center justify-center text-indigo-600">
-                                {session.user.name?.[0] || 'A'}
+                                {sessionUser.name?.[0] || 'A'}
                             </div>
-                            <span className="hidden sm:block text-sm">{session.user.name || 'Admin'}</span>
+                            <span className="hidden sm:block text-sm">{sessionUser.name || 'Admin'}</span>
                             <ChevronDown className="h-4 w-4 text-slate-400" />
                         </Button>
                     </div>

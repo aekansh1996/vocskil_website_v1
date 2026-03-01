@@ -1,4 +1,5 @@
-import { auth } from "@/auth";
+import { getServerSession } from "next-auth";
+import { authOptions } from "@/lib/auth-options";
 import { redirect } from "next/navigation";
 import Link from "next/link";
 import { BookOpen, User, LogOut } from "lucide-react";
@@ -9,7 +10,7 @@ export default async function DashboardLayout({
 }: {
     children: React.ReactNode;
 }) {
-    const session = await auth();
+    const session = await getServerSession(authOptions);
 
     if (!session) {
         redirect("/login");
@@ -25,11 +26,8 @@ export default async function DashboardLayout({
 
                     <div className="flex items-center gap-4">
                         <span className="text-sm text-slate-600">Welcome, {session.user.name}</span>
-                        <form action={async () => {
-                            "use server";
-                            // await signOut();
-                        }}>
-                            <Button variant="ghost" size="sm" className="text-slate-500 hover:text-red-600">
+                        <form action="/api/auth/signout" method="POST">
+                            <Button type="submit" variant="ghost" size="sm" className="text-slate-500 hover:text-red-600">
                                 <LogOut className="h-4 w-4 mr-2" />
                                 Sign Out
                             </Button>

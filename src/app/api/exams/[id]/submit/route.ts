@@ -1,5 +1,6 @@
 import { prisma } from "@/lib/prisma";
-import { auth } from "@/auth";
+import { getServerSession } from "next-auth";
+import { authOptions } from "@/lib/auth-options";
 import { NextResponse } from "next/server";
 import { generateCertificate, sendCertificateEmail } from "@/lib/certificate-service";
 import { syncExamAttemptToFirestore, syncCertificateToFirestore } from "@/lib/db";
@@ -8,7 +9,7 @@ export async function POST(
     req: Request,
     { params }: { params: { id: string } }
 ) {
-    const session = await auth();
+    const session = await getServerSession(authOptions);
     const { answers, proctoringData, studentInfo } = await req.json();
     const examId = params.id;
 

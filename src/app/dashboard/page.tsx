@@ -1,6 +1,7 @@
 // DEPLOY FIX - FORCE NEW COMMIT V2
 import { PrismaClient } from "@prisma/client";
-import { auth } from "@/auth";
+import { getServerSession } from "next-auth";
+import { authOptions } from "@/lib/auth-options";
 import Link from "next/link";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
@@ -20,12 +21,13 @@ type EnrollmentWithCourse = {
 };
 
 export default async function DashboardPage() {
-    const session = await auth();
+    const session = await getServerSession(authOptions);
+    const sessionUser = session?.user as any;
 
-    if (!session?.user?.email) return null;
+    if (!sessionUser?.email) return null;
 
     const user = await prisma.user.findUnique({
-        where: { email: session.user.email },
+        where: { email: sessionUser.email },
         include: {
             enrollments: {
                 include: {
@@ -36,14 +38,14 @@ export default async function DashboardPage() {
                                 take: 1,
                                 include: {
                                     attempts: {
-                                        where: { userId: session.user.id },
+                                        where: { userId: (session as any)?.user?.id },
                                         orderBy: { createdAt: "desc" },
                                         take: 1
                                     }
                                 }
                             },
                             certificates: {
-                                where: { userId: session.user.id }
+                                where: { userId: (session as any)?.user?.id }
                             }
                         }
                     }
