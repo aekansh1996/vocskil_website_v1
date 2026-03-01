@@ -65,6 +65,11 @@ export default async function CoursesPage() {
                                 <td className="px-6 py-4 text-slate-600">{course._count.enrollments}</td>
                                 <td className="px-6 py-4 text-right">
                                     <div className="flex items-center justify-end gap-2">
+                                        <Button asChild variant="outline" size="sm" className="text-indigo-600 hover:text-indigo-700 hover:bg-indigo-50 font-semibold">
+                                            <Link href={`/admin/courses/${course.id}/builder`}>
+                                                Course Builder
+                                            </Link>
+                                        </Button>
                                         <Button asChild variant="ghost" size="icon" className="h-8 w-8 text-slate-500 hover:text-indigo-600">
                                             <Link href={`/admin/courses/${course.id}`}>
                                                 <Pencil className="h-4 w-4" />

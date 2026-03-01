@@ -8,6 +8,7 @@ import { PartnersSection } from "@/components/home/partners-section";
 import { StickyCTA } from "@/components/home/sticky-cta";
 import { TestimonialsSection } from "@/components/home/testimonials-section";
 import { WhyChooseUs } from "@/components/home/why-choose-us";
+import { FreeCoursesSection } from "@/components/home/free-courses";
 
 export default function Home() {
   return (
@@ -15,6 +16,7 @@ export default function Home() {
       <HeroSection />
       <StatsBar />
       <ProgramsSection />
+      <FreeCoursesSection />
       <WhyChooseUs />
       <LearningExperience />
       <CareerImpact />

@@ -1,8 +1,6 @@
 import { NextResponse } from "next/server";
-import { PrismaClient } from "@prisma/client";
+import { prisma } from "@/lib/prisma";
 import { auth } from "@/auth";
-
-const prisma = new PrismaClient();
 
 export async function POST(req: Request) {
     try {
@@ -12,13 +10,15 @@ export async function POST(req: Request) {
             return NextResponse.json({ message: "Unauthorized" }, { status: 401 });
         }
 
-        const { title, description, price } = await req.json();
+        const { title, description, price, image, published } = await req.json();
 
         const course = await prisma.course.create({
             data: {
                 title,
                 description,
-                price,
+                price: parseFloat(price) || 0,
+                image,
+                published: !!published,
             },
         });
 

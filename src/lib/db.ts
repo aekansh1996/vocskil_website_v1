@@ -5,6 +5,10 @@ export async function saveUserToFirestore(userData: {
     id: string;
     name: string | null;
     email: string | null;
+    phone?: string | null;
+    college?: string | null;
+    course?: string | null;
+    studentId?: string | null;
     role: string;
 }) {
     try {
@@ -12,6 +16,7 @@ export async function saveUserToFirestore(userData: {
         await setDoc(doc(db, "users", userData.id), {
             ...userData,
             createdAt: serverTimestamp(),
+            updatedAt: serverTimestamp(),
         });
         console.log("User saved to Firestore:", userData.id);
     } catch (error) {
@@ -57,5 +62,27 @@ export async function savePurchaseToFirestore(purchaseData: {
         return docRef.id;
     } catch (error) {
         console.error("Error saving purchase to Firestore:", error);
+    }
+}
+
+export async function syncExamAttemptToFirestore(attemptData: any) {
+    try {
+        await addDoc(collection(db, "attempts"), {
+            ...attemptData,
+            syncedAt: serverTimestamp(),
+        });
+    } catch (error) {
+        console.error("Error syncing attempt to Firestore:", error);
+    }
+}
+
+export async function syncCertificateToFirestore(certData: any) {
+    try {
+        await addDoc(collection(db, "certificates"), {
+            ...certData,
+            syncedAt: serverTimestamp(),
+        });
+    } catch (error) {
+        console.error("Error syncing certificate to Firestore:", error);
     }
 }

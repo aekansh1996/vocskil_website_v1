@@ -31,7 +31,20 @@ export default async function DashboardPage() {
                 include: {
                     course: {
                         include: {
-                            _count: { select: { modules: true } }
+                            _count: { select: { modules: true } },
+                            exams: {
+                                take: 1,
+                                include: {
+                                    attempts: {
+                                        where: { userId: session.user.id },
+                                        orderBy: { createdAt: "desc" },
+                                        take: 1
+                                    }
+                                }
+                            },
+                            certificates: {
+                                where: { userId: session.user.id }
+                            }
                         }
                     }
                 }
@@ -39,7 +52,20 @@ export default async function DashboardPage() {
         }
     });
 
-    const enrolledCourses = user?.enrollments.map((e: EnrollmentWithCourse) => e.course) || [];
+    const enrolledCourses = user?.enrollments.map((e: any) => {
+        const course = e.course;
+        const exam = course.exams[0];
+        const lastAttempt = exam?.attempts[0];
+        const certificate = course.certificates[0];
+
+        return {
+            ...course,
+            examId: exam?.id,
+            passed: lastAttempt?.passed || false,
+            score: lastAttempt?.score,
+            certificateUrl: certificate?.pdfUrl
+        };
+    }) || [];
 
     return (
         <div className="space-y-8">
@@ -64,14 +90,32 @@ export default async function DashboardPage() {
                             <CardContent>
                                 <div className="flex justify-between text-sm text-slate-500 mb-4">
                                     <span>{course._count.modules} Modules</span>
-                                    <span>0% Complete</span>
+                                    <span className={course.passed ? "text-green-600 font-bold" : ""}>
+                                        {course.passed ? `Passed (${course.score}%)` : "In Progress"}
+                                    </span>
                                 </div>
-                                <Button asChild className="w-full bg-indigo-600 hover:bg-indigo-700 text-white">
-                                    <Link href={`/dashboard/courses/${course.id}`}>
-                                        <PlayCircle className="h-4 w-4 mr-2" />
-                                        Continue Learning
-                                    </Link>
-                                </Button>
+                                <div className="flex flex-col gap-2">
+                                    <Button asChild className="w-full bg-indigo-600 hover:bg-indigo-700 text-white shadow-lg shadow-indigo-500/20">
+                                        <Link href={`/dashboard/courses/${course.id}/learn`}>
+                                            <PlayCircle className="h-4 w-4 mr-2" />
+                                            Start Learning
+                                        </Link>
+                                    </Button>
+
+                                    {course.examId && !course.passed && (
+                                        <Button asChild variant="outline" className="w-full border-orange-500 text-orange-600 hover:bg-orange-50">
+                                            <Link href={`/exams/${course.examId}`}>
+                                                Take Professional Exam
+                                            </Link>
+                                        </Button>
+                                    )}
+
+                                    {course.passed && (
+                                        <div className="flex items-center justify-center p-2 bg-green-50 rounded-lg border border-green-200 text-green-700 text-sm font-medium">
+                                            ✅ Certificate Issued
+                                        </div>
+                                    )}
+                                </div>
                             </CardContent>
                         </Card>
                     ))}

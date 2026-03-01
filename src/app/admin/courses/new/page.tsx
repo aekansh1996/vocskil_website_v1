@@ -10,6 +10,8 @@ export default function CreateCoursePage() {
     const [title, setTitle] = useState("");
     const [description, setDescription] = useState("");
     const [price, setPrice] = useState("");
+    const [image, setImage] = useState("");
+    const [published, setPublished] = useState(false);
     const [loading, setLoading] = useState(false);
     const router = useRouter();
 
@@ -24,7 +26,9 @@ export default function CreateCoursePage() {
                 body: JSON.stringify({
                     title,
                     description,
-                    price: parseFloat(price),
+                    price: parseFloat(price) || 0,
+                    image,
+                    published,
                 }),
             });
 
@@ -78,6 +82,7 @@ export default function CreateCoursePage() {
 
                 <div className="space-y-2">
                     <label htmlFor="price" className="text-sm font-medium text-slate-900">Price ($)</label>
+                    <p className="text-xs text-slate-500 mb-1">Set to 0 to make it a Free Course.</p>
                     <input
                         id="price"
                         type="number"
@@ -86,9 +91,35 @@ export default function CreateCoursePage() {
                         value={price}
                         onChange={(e) => setPrice(e.target.value)}
                         className="flex h-10 w-full rounded-md border border-slate-300 bg-white px-3 py-2 text-sm placeholder:text-slate-400 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent"
-                        placeholder="49.99"
+                        placeholder="0.00"
                         required
                     />
+                </div>
+
+                <div className="space-y-2">
+                    <label htmlFor="image" className="text-sm font-medium text-slate-900">Course Cover Image URL</label>
+                    <input
+                        id="image"
+                        type="text"
+                        value={image}
+                        onChange={(e) => setImage(e.target.value)}
+                        className="flex h-10 w-full rounded-md border border-slate-300 bg-white px-3 py-2 text-sm placeholder:text-slate-400 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent"
+                        placeholder="https://images.unsplash.com/photo-..."
+                    />
+                </div>
+
+                <div className="flex items-center gap-3 p-4 bg-slate-50 rounded-xl border border-slate-100">
+                    <input
+                        id="published"
+                        type="checkbox"
+                        checked={published}
+                        onChange={(e) => setPublished(e.target.checked)}
+                        className="h-4 w-4 rounded border-slate-300 text-indigo-600 focus:ring-indigo-500"
+                    />
+                    <div className="space-y-0.5">
+                        <label htmlFor="published" className="text-sm font-bold text-slate-900">Publish Immediately</label>
+                        <p className="text-xs text-slate-500">Make this course visible to students on the homepage after creation.</p>
+                    </div>
                 </div>
 
                 <div className="pt-4 flex justify-end gap-4">

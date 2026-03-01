@@ -7,11 +7,11 @@ const prisma = new PrismaClient();
 
 export async function POST(req: Request) {
     try {
-        const { name, email, password } = await req.json();
+        const { name, email, password, phone, college, course, studentId } = await req.json();
 
-        if (!email || !password) {
+        if (!email || !password || !name || !phone) {
             return NextResponse.json(
-                { message: "Missing required fields" },
+                { message: "Missing required fields (Name, Email, Password, and Phone are required)" },
                 { status: 400 }
             );
         }
@@ -22,7 +22,7 @@ export async function POST(req: Request) {
 
         if (existingUser) {
             return NextResponse.json(
-                { message: "User already exists" },
+                { message: "User with this email already exists" },
                 { status: 400 }
             );
         }
@@ -34,15 +34,23 @@ export async function POST(req: Request) {
                 name,
                 email,
                 password: hashedPassword,
+                phone,
+                college,
+                course,
+                studentId,
                 role: "STUDENT",
             },
         });
 
-        // Save user to Firestore
+        // Save user to Firestore with all details
         await saveUserToFirestore({
             id: user.id,
             name: user.name,
             email: user.email,
+            phone: user.phone,
+            college: user.college,
+            course: user.course,
+            studentId: user.studentId,
             role: user.role,
         });
 

@@ -4,6 +4,8 @@ import * as React from "react";
 import Link from "next/link";
 import { Menu, X, ChevronDown, Phone, Mail, Code2 } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import { useSession } from "next-auth/react";
+import { usePathname } from "next/navigation";
 
 const courseCategories = [
     {
@@ -45,8 +47,13 @@ const courseCategories = [
 ];
 
 export function Navbar() {
+    const { data: session, status } = useSession();
+    const pathname = usePathname();
     const [isOpen, setIsOpen] = React.useState(false);
     const [showMegaMenu, setShowMegaMenu] = React.useState(false);
+
+    const isNoNavbarPage = pathname?.startsWith("/admin") || pathname?.includes("/learn");
+    if (isNoNavbarPage) return null;
 
     return (
         <div className="flex flex-col w-full">
@@ -142,12 +149,27 @@ export function Navbar() {
                     </div>
 
                     <div className="hidden md:flex items-center gap-4">
-                        <Button variant="ghost" className="text-indigo-600 hover:text-indigo-700 hover:bg-indigo-50 font-medium" asChild>
-                            <Link href="/login">Login</Link>
-                        </Button>
-                        <Button className="bg-indigo-600 hover:bg-indigo-700 text-white font-medium px-6" asChild>
-                            <Link href="/register">Get Started</Link>
-                        </Button>
+                        {status === "authenticated" ? (
+                            <>
+                                {session?.user?.role === "ADMIN" && (
+                                    <Button variant="outline" className="border-indigo-600 text-indigo-600 hover:bg-indigo-50 font-bold" asChild>
+                                        <Link href="/admin">Admin Panel</Link>
+                                    </Button>
+                                )}
+                                <Button className="bg-indigo-600 hover:bg-indigo-700 text-white font-medium px-6" asChild>
+                                    <Link href="/dashboard">My Dashboard</Link>
+                                </Button>
+                            </>
+                        ) : (
+                            <>
+                                <Button variant="ghost" className="text-indigo-600 hover:text-indigo-700 hover:bg-indigo-50 font-medium" asChild>
+                                    <Link href="/login">Login</Link>
+                                </Button>
+                                <Button className="bg-indigo-600 hover:bg-indigo-700 text-white font-medium px-6" asChild>
+                                    <Link href="/register">Get Started</Link>
+                                </Button>
+                            </>
+                        )}
                     </div>
 
                     {/* Mobile Menu Toggle */}

@@ -41,20 +41,32 @@ export const { handlers, auth, signIn, signOut } = NextAuth({
                     email: user.email,
                     name: user.name,
                     role: user.role,
+                    phone: user.phone,
+                    college: user.college,
+                    course: user.course,
+                    studentId: user.studentId,
                 };
             },
         }),
     ],
     callbacks: {
-        async jwt({ token, user }) {
+        async jwt({ token, user }: { token: any, user: any }) {
             if (user) {
                 token.role = user.role;
+                token.phone = user.phone;
+                token.college = user.college;
+                token.course = user.course;
+                token.studentId = user.studentId;
             }
             return token;
         },
-        async session({ session, token }) {
+        async session({ session, token }: { session: any, token: any }) {
             if (session.user) {
                 session.user.role = token.role as string;
+                session.user.phone = token.phone as string;
+                session.user.college = token.college as string;
+                session.user.course = token.course as string;
+                session.user.studentId = token.studentId as string;
             }
             return session;
         },

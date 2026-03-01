@@ -1,7 +1,14 @@
+"use client";
+
 import Link from "next/link";
 import { Facebook, Twitter, Instagram, Linkedin, Mail, Phone, MapPin, ShieldCheck } from "lucide-react";
+import { usePathname } from "next/navigation";
 
 export function Footer() {
+    const pathname = usePathname();
+    const isNoFooterPage = pathname?.startsWith("/admin") || pathname?.includes("/learn");
+    if (isNoFooterPage) return null;
+
     return (
         <footer className="bg-white text-slate-600 pt-16 pb-8 border-t border-slate-100">
             <div className="container mx-auto px-4">

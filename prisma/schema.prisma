@@ -11,22 +11,28 @@ datasource db {
 }
 
 model User {
-  id        String   @id @default(cuid())
-  name      String?
-  email     String   @unique
-  password  String
-  role      String   @default("STUDENT") // ADMIN, STUDENT
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
+  id          String   @id @default(cuid())
+  name        String?
+  email       String   @unique
+  password    String
+  phone       String?
+  college     String?
+  course      String?
+  studentId   String?
+  role        String   @default("STUDENT") // ADMIN, STUDENT
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
 
   enrollments Enrollment[]
+  attempts    ExamAttempt[]
+  certificates Certificate[]
 }
 
 model Course {
   id          String   @id @default(cuid())
   title       String
-  description String
-  price       Float
+  description String?
+  price       Float    @default(0)
   image       String?
   published   Boolean  @default(false)
   createdAt   DateTime @default(now())
@@ -34,11 +40,14 @@ model Course {
 
   modules     Module[]
   enrollments Enrollment[]
+  exams       Exam[]
+  certificates Certificate[]
 }
 
 model Module {
   id        String   @id @default(cuid())
   title     String
+  order     Int      @default(0)
   courseId  String
   course    Course   @relation(fields: [courseId], references: [id], onDelete: Cascade)
   lessons   Lesson[]
@@ -47,7 +56,10 @@ model Module {
 model Lesson {
   id        String   @id @default(cuid())
   title     String
-  content   String?  // Video URL or Text content
+  content   String?  // Text content/Markdown
+  videoUrl  String?
+  slidesUrl String?
+  order     Int      @default(0)
   moduleId  String
   module    Module   @relation(fields: [moduleId], references: [id], onDelete: Cascade)
 }
@@ -61,4 +73,55 @@ model Enrollment {
   createdAt DateTime @default(now())
 
   @@unique([userId, courseId])
+}
+
+model Exam {
+  id          String   @id @default(cuid())
+  title       String
+  description String?
+  courseId    String?
+  course      Course?   @relation(fields: [courseId], references: [id], onDelete: SetNull)
+  passingScore Int     @default(70)
+  duration    Int      @default(60) // in minutes
+  isPublic    Boolean  @default(false)
+  customFields String?   // JSON string for custom intake fields (e.g. Roll No)
+  questions   Question[]
+  attempts    ExamAttempt[]
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+}
+
+model Question {
+  id          String   @id @default(cuid())
+  text        String
+  type        String   @default("MCQ") // MCQ, TRUE_FALSE, SHORT_ANSWER
+  options     String?  // JSON stringified array of options (optional for short answer)
+  correctAnswer String
+  examId      String
+  exam        Exam     @relation(fields: [examId], references: [id], onDelete: Cascade)
+}
+
+model ExamAttempt {
+  id        String   @id @default(cuid())
+  userId    String
+  examId    String
+  score     Int
+  passed    Boolean
+  proctoringData String? // JSON string for screenshots or flags
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  exam      Exam     @relation(fields: [examId], references: [id], onDelete: Cascade)
+  createdAt DateTime @default(now())
+}
+
+model Certificate {
+  id        String   @id @default(cuid())
+  userId    String
+  courseId  String?
+  examId    String?
+  pdfUrl    String?
+  issuedAt  DateTime @default(now())
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  course    Course?  @relation(fields: [courseId], references: [id], onDelete: Cascade)
+
+  @@unique([userId, courseId, examId])
 }

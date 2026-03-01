@@ -14,6 +14,8 @@ export const metadata: Metadata = {
   description: "Vocskill offers expert tutors, online and offline classes, and certification programs.",
 };
 
+import { Providers } from "@/components/providers/session-provider";
+
 export default function RootLayout({
   children,
 }: Readonly<{
@@ -24,11 +26,13 @@ export default function RootLayout({
       <body
         className={`${inter.variable} antialiased flex flex-col min-h-screen`}
       >
-        <Navbar />
-        <main className="flex-1">
-          {children}
-        </main>
-        <Footer />
+        <Providers>
+          <Navbar />
+          <main className="flex-1">
+            {children}
+          </main>
+          <Footer />
+        </Providers>
       </body>
     </html>
   );
