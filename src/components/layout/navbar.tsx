@@ -2,7 +2,7 @@
 
 import * as React from "react";
 import Link from "next/link";
-import { Menu, X, ChevronDown, Phone, Mail, Code2 } from "lucide-react";
+import { Menu, X, ChevronDown, Phone, Mail, Code as Code2 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { useSession } from "next-auth/react";
 import { usePathname } from "next/navigation";
