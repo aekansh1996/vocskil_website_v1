@@ -40,8 +40,8 @@ export async function POST(req: Request) {
             },
         });
 
-        // Save user to Firestore with all details
-        await saveUserToFirestore({
+        // Save user to Firestore with all details (non-blocking)
+        saveUserToFirestore({
             id: user.id,
             name: user.name,
             email: user.email,
@@ -50,7 +50,7 @@ export async function POST(req: Request) {
             course: user.course,
             studentId: user.studentId,
             role: user.role,
-        });
+        }).catch(err => console.error("Background Firestore sync failed:", err));
 
         return NextResponse.json(
             { message: "User created successfully", user },
