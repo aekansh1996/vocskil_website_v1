@@ -3,7 +3,7 @@ const prisma = new PrismaClient();
 
 async function main() {
     const adminEmail = 'admin@vocskill.com';
-    const hashedPassword = '$2b$10$n1vEBVdSTQ0/dPtw7TQwbOeA0Lw0JDLopD4Dcuf9wsdZSTVniKWoO'; // admin123
+    const hashedPassword = '$2b$10$ytBUV/.PKeo62JIqQ6noH.c1.l1NZRudX0//yHnfoX5r3RCHoyaQK'; // admin@123
 
     const user = await prisma.user.upsert({
         where: { email: adminEmail },
