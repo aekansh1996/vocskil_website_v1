@@ -1,4 +1,5 @@
 import { prisma } from "@/lib/prisma";
+export const dynamic = 'force-dynamic';
 import { notFound } from "next/navigation";
 import ExamInterface from "@/components/exams/ExamInterface";
 
@@ -18,7 +19,7 @@ export default async function TakeExamPage({ params }: { params: Promise<{ id: s
         ...exam,
         questions: exam.questions.map((q) => ({
             ...q,
-            options: JSON.parse(q.options),
+            options: q.options ? JSON.parse(q.options) : [],
         })),
     };
 

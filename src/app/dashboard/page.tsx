@@ -1,13 +1,8 @@
-// DEPLOY FIX - FORCE NEW COMMIT V2
-import { PrismaClient } from "@prisma/client";
-import { getServerSession } from "next-auth";
-import { authOptions } from "@/lib/auth-options";
-import Link from "next/link";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { PlayCircle } from "lucide-react";
 
-const prisma = new PrismaClient();
+export const dynamic = 'force-dynamic';
 
 
 type EnrollmentWithCourse = {
