@@ -5,8 +5,9 @@ import { NextResponse } from "next/server";
 
 export async function POST(
     req: Request,
-    { params }: { params: { id: string } }
+    { params }: { params: Promise<{ id: string }> }
 ) {
+    const { id } = await params;
     const session = await getServerSession(authOptions);
     if (!session?.user || session.user.role !== "ADMIN") {
         return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
@@ -21,7 +22,7 @@ export async function POST(
                 videoUrl,
                 slidesUrl,
                 order: order || 0,
-                moduleId: params.id,
+                moduleId: id,
             },
         });
         return NextResponse.json(lesson);

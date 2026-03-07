@@ -70,14 +70,17 @@ export default async function CoursesPage() {
                                                 Course Builder
                                             </Link>
                                         </Button>
-                                        <Button asChild variant="ghost" size="icon" className="h-8 w-8 text-slate-500 hover:text-indigo-600">
-                                            <Link href={`/admin/courses/${course.id}`}>
-                                                <Pencil className="h-4 w-4" />
-                                            </Link>
-                                        </Button>
-                                        <Button variant="ghost" size="icon" className="h-8 w-8 text-slate-500 hover:text-red-600">
-                                            <Trash className="h-4 w-4" />
-                                        </Button>
+                                        <form action={async () => {
+                                            'use server';
+                                            if (confirm('Are you sure you want to delete this course?')) {
+                                                await prisma.course.delete({ where: { id: course.id } });
+                                                // redirect is handled by revalidation or simpler:
+                                            }
+                                        }}>
+                                            <Button variant="ghost" size="icon" className="h-8 w-8 text-slate-500 hover:text-red-600">
+                                                <Trash className="h-4 w-4" />
+                                            </Button>
+                                        </form>
                                     </div>
                                 </td>
                             </tr>

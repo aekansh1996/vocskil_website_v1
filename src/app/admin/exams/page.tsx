@@ -83,9 +83,9 @@ export default async function AdminExamsPage() {
                                             Questions
                                         </Link>
                                     </Button>
-                                    <Button asChild variant="outline" size="icon">
-                                        <Link href={`/admin/exams/${exam.id}/settings`}>
-                                            <Settings className="h-4 w-4" />
+                                    <Button asChild variant="ghost" size="icon" className="h-8 w-8 text-slate-500 hover:text-indigo-600">
+                                        <Link href={`/admin/exams/${exam.id}/questions`}>
+                                            <Pencil className="h-4 w-4" />
                                         </Link>
                                     </Button>
                                 </div>

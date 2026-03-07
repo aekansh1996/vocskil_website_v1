@@ -5,8 +5,9 @@ import { NextResponse } from "next/server";
 
 export async function GET(
     req: Request,
-    { params }: { params: { id: string } }
+    { params }: { params: Promise<{ id: string }> }
 ) {
+    const { id } = await params;
     const session = await getServerSession(authOptions);
     if (!session?.user || session.user.role !== "ADMIN") {
         return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
@@ -14,7 +15,7 @@ export async function GET(
 
     try {
         const modules = await prisma.module.findMany({
-            where: { courseId: params.id },
+            where: { courseId: id },
             orderBy: { order: "asc" } as any,
             include: {
                 lessons: {
@@ -30,8 +31,9 @@ export async function GET(
 
 export async function POST(
     req: Request,
-    { params }: { params: { id: string } }
+    { params }: { params: Promise<{ id: string }> }
 ) {
+    const { id } = await params;
     const session = await getServerSession(authOptions);
     if (!session?.user || session.user.role !== "ADMIN") {
         return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
@@ -43,7 +45,7 @@ export async function POST(
             data: {
                 title,
                 order: order || 0,
-                courseId: params.id,
+                courseId: id,
             },
         });
         return NextResponse.json(module);
