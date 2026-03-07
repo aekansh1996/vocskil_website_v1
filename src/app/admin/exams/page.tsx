@@ -2,7 +2,7 @@ import { prisma } from "@/lib/prisma";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import Link from "next/link";
-import { PlusCircle, FileText, Settings, Link2, Clock } from "lucide-react";
+import { PlusCircle, FileText, Settings, Link2, Clock, Pencil } from "lucide-react";
 import { ShareExamButton } from "@/components/admin/ShareExamButton";
 
 export default async function AdminExamsPage() {

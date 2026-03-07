@@ -1,10 +1,10 @@
-import { PrismaClient } from "@prisma/client";
+"use client";
+
+import { useState, useEffect } from "react";
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
 import { Plus, Pencil, Trash } from "lucide-react";
-
-const prisma = new PrismaClient();
-
+import { useRouter } from "next/navigation";
 
 type CourseWithCounts = {
     id: string;
@@ -17,15 +17,44 @@ type CourseWithCounts = {
     };
 };
 
-export default async function CoursesPage() {
-    const courses = await prisma.course.findMany({
-        orderBy: { createdAt: "desc" },
-        include: {
-            _count: {
-                select: { modules: true, enrollments: true },
-            },
-        },
-    });
+export default function CoursesPage() {
+    const [courses, setCourses] = useState<CourseWithCounts[]>([]);
+    const [isLoading, setIsLoading] = useState(true);
+
+    const fetchCourses = async () => {
+        setIsLoading(true);
+        try {
+            const res = await fetch("/api/admin/courses");
+            const data = await res.json();
+            setCourses(data);
+        } catch (error) {
+            console.error("Failed to fetch courses:", error);
+        } finally {
+            setIsLoading(false);
+        }
+    };
+
+    useEffect(() => {
+        fetchCourses();
+    }, []);
+
+    const handleDelete = async (id: string) => {
+        if (!window.confirm("Are you sure you want to delete this course?")) return;
+
+        try {
+            const res = await fetch(`/api/admin/courses/${id}`, { method: "DELETE" });
+            if (res.ok) {
+                fetchCourses();
+            } else {
+                alert("Failed to delete course");
+            }
+        } catch (error) {
+            console.error("Delete error:", error);
+            alert("An error occurred while deleting");
+        }
+    };
+
+    if (isLoading) return <div className="p-8 text-center text-slate-500 font-medium">Loading courses...</div>;
 
     return (
         <div className="space-y-6">
@@ -70,17 +99,19 @@ export default async function CoursesPage() {
                                                 Course Builder
                                             </Link>
                                         </Button>
-                                        <form action={async () => {
-                                            'use server';
-                                            if (confirm('Are you sure you want to delete this course?')) {
-                                                await prisma.course.delete({ where: { id: course.id } });
-                                                // redirect is handled by revalidation or simpler:
-                                            }
-                                        }}>
-                                            <Button variant="ghost" size="icon" className="h-8 w-8 text-slate-500 hover:text-red-600">
-                                                <Trash className="h-4 w-4" />
-                                            </Button>
-                                        </form>
+                                        <Button
+                                            variant="ghost"
+                                            size="icon"
+                                            className="h-8 w-8 text-slate-500 hover:text-red-600"
+                                            onClick={async () => {
+                                                if (window.confirm('Are you sure you want to delete this course?')) {
+                                                    const res = await fetch(`/api/admin/courses/${course.id}`, { method: 'DELETE' });
+                                                    if (res.ok) window.location.reload();
+                                                }
+                                            }}
+                                        >
+                                            <Trash className="h-4 w-4" />
+                                        </Button>
                                     </div>
                                 </td>
                             </tr>
