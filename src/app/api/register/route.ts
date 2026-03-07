@@ -1,9 +1,7 @@
 import { NextResponse } from "next/server";
-import { PrismaClient } from "@prisma/client";
+import { prisma } from "@/lib/prisma";
 import bcrypt from "bcryptjs";
 import { saveUserToFirestore } from "@/lib/db";
-
-const prisma = new PrismaClient();
 
 export async function POST(req: Request) {
     try {
@@ -58,9 +56,13 @@ export async function POST(req: Request) {
             { message: "User created successfully", user },
             { status: 201 }
         );
-    } catch (error) {
+    } catch (error: any) {
+        console.error("Registration error:", error);
         return NextResponse.json(
-            { message: "Internal server error" },
+            {
+                message: "Internal server error",
+                error: process.env.NODE_ENV === "development" ? error.message : undefined
+            },
             { status: 500 }
         );
     }
