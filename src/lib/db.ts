@@ -45,25 +45,6 @@ export async function saveEnquiryToFirestore(enquiryData: {
     }
 }
 
-export async function savePurchaseToFirestore(purchaseData: {
-    userId: string;
-    courseId: string;
-    amount: number;
-    orderId: string;
-    paymentId: string;
-}) {
-    try {
-        const docRef = await addDoc(collection(db, "purchases"), {
-            ...purchaseData,
-            createdAt: serverTimestamp(),
-            status: "completed",
-        });
-        console.log("Purchase saved to Firestore with ID:", docRef.id);
-        return docRef.id;
-    } catch (error) {
-        console.error("Error saving purchase to Firestore:", error);
-    }
-}
 
 export async function syncExamAttemptToFirestore(attemptData: any) {
     try {

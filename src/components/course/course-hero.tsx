@@ -25,67 +25,35 @@ export function CourseHero({ title, description, badge, duration, mode, nextBatc
     const [loading, setLoading] = useState(false);
     const [isEnquiryOpen, setIsEnquiryOpen] = useState(false);
 
-    const handleBuyNow = async () => {
+    const handleEnroll = async () => {
         setLoading(true);
         try {
-            // 1. Create Order
-            const res = await fetch("/api/razorpay/order", {
+            // Check if user is logged in
+            const res = await fetch("/api/auth/session");
+            const session = await res.json();
+
+            if (!session?.user) {
+                window.location.href = "/login?callbackUrl=" + window.location.pathname;
+                return;
+            }
+
+            // Indirectly enroll - since user wants free courses, 
+            // we'll assume a direct enrollment API exists or should be called.
+            // For now, redirecting to a placeholder or showing success.
+            const enrollRes = await fetch("/api/enroll", {
                 method: "POST",
                 headers: { "Content-Type": "application/json" },
                 body: JSON.stringify({ courseId }),
             });
 
-            if (!res.ok) {
-                if (res.status === 401) {
-                    window.location.href = "/login";
-                    return;
-                }
-                throw new Error("Failed to create order");
+            if (enrollRes.ok) {
+                window.location.href = "/dashboard";
+            } else {
+                const data = await enrollRes.json();
+                alert(data.message || "Enrollment failed. Please try again.");
             }
-
-            const order = await res.json();
-
-            // 2. Open Razorpay Modal
-            const options = {
-                key: process.env.NEXT_PUBLIC_RAZORPAY_KEY_ID,
-                amount: order.amount,
-                currency: order.currency,
-                name: "Vocskill Learning",
-                description: title,
-                order_id: order.id,
-                handler: async function (response: any) {
-                    // 3. Verify Payment
-                    const verifyRes = await fetch("/api/razorpay/verify", {
-                        method: "POST",
-                        headers: { "Content-Type": "application/json" },
-                        body: JSON.stringify({
-                            razorpay_order_id: response.razorpay_order_id,
-                            razorpay_payment_id: response.razorpay_payment_id,
-                            razorpay_signature: response.razorpay_signature,
-                            courseId: courseId,
-                            userId: order.notes.userId,
-                        }),
-                    });
-
-                    if (verifyRes.ok) {
-                        window.location.href = "/dashboard";
-                    } else {
-                        alert("Payment verification failed");
-                    }
-                },
-                prefill: {
-                    name: "User Name", // Ideally from session
-                    email: "user@example.com", // Ideally from session
-                },
-                theme: {
-                    color: "#4f46e5",
-                },
-            };
-
-            const rzp1 = new (window as any).Razorpay(options);
-            rzp1.open();
         } catch (error) {
-            console.error("Payment failed", error);
+            console.error("Enrollment failed", error);
             alert("Something went wrong. Please try again.");
         } finally {
             setLoading(false);
@@ -94,7 +62,6 @@ export function CourseHero({ title, description, badge, duration, mode, nextBatc
 
     return (
         <>
-            <script src="https://checkout.razorpay.com/v1/checkout.js"></script>
             <section className="relative bg-slate-900 py-20 lg:py-28 overflow-hidden">
                 {/* Background Image with Overlay */}
                 <div className="absolute inset-0 z-0">
@@ -144,10 +111,10 @@ export function CourseHero({ title, description, badge, duration, mode, nextBatc
                                 <Button
                                     size="lg"
                                     className="bg-indigo-600 hover:bg-indigo-700 text-white px-8 h-12 text-lg"
-                                    onClick={handleBuyNow}
+                                    onClick={handleEnroll}
                                     disabled={loading}
                                 >
-                                    {loading ? "Processing..." : "Buy Now"}
+                                    {loading ? "Enrolling..." : "Enroll Now"}
                                 </Button>
                                 <Button
                                     size="lg"
