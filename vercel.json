@@ -4,10 +4,5 @@
             "runtime": "nodejs18.x",
             "maxDuration": 30
         }
-    },
-    "build": {
-        "env": {
-            "DATABASE_URL": "@database_url"
-        }
     }
 }
