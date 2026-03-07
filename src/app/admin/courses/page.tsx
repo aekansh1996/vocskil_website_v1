@@ -105,8 +105,17 @@ export default function CoursesPage() {
                                             className="h-8 w-8 text-slate-500 hover:text-red-600"
                                             onClick={async () => {
                                                 if (window.confirm('Are you sure you want to delete this course?')) {
-                                                    const res = await fetch(`/api/admin/courses/${course.id}`, { method: 'DELETE' });
-                                                    if (res.ok) window.location.reload();
+                                                    try {
+                                                        const res = await fetch(`/api/admin/courses/${course.id}`, { method: 'DELETE' });
+                                                        if (res.ok) {
+                                                            fetchCourses();
+                                                        } else {
+                                                            alert("Failed to delete course");
+                                                        }
+                                                    } catch (err) {
+                                                        console.error("Delete failed:", err);
+                                                        alert("Error deleting course");
+                                                    }
                                                 }
                                             }}
                                         >
