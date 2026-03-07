@@ -4,13 +4,6 @@ import bcrypt from "bcryptjs";
 import { saveUserToFirestore } from "@/lib/db";
 
 export async function POST(req: Request) {
-    // Debug: ensure DATABASE_URL is present (mask credentials)
-    if (!process.env.DATABASE_URL) {
-        console.error("[REGISTRATION] DATABASE_URL env var missing");
-    } else {
-        const masked = process.env.DATABASE_URL.replace(/(?<=postgresql:\/\/[^:]+:)[^@]+(?=@)/, "*****");
-        console.log("[REGISTRATION] Using DATABASE_URL:", masked);
-    }
     try {
         const { name, email, password, phone, college, course, studentId } = await req.json();
 
@@ -65,17 +58,10 @@ export async function POST(req: Request) {
         );
     } catch (error: any) {
         console.error("Registration error:", error);
-        // Log stack trace for deeper insight
-        if (error && (error as any).stack) {
-            console.error(error.stack);
-        }
         return NextResponse.json(
             {
                 message: "Internal server error",
-                // Expose detailed error only in development
-                error: process.env.NODE_ENV === "development" ? error.message : undefined,
-                // Include Prisma error code if available
-                code: (error as any).code ?? null,
+                error: process.env.NODE_ENV === "development" ? error.message : undefined
             },
             { status: 500 }
         );
