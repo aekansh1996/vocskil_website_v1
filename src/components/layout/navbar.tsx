@@ -2,7 +2,7 @@
 
 import * as React from "react";
 import Link from "next/link";
-import { Menu, X, ChevronDown, Phone, Mail, Code2 } from "lucide-react";
+import { Menu, X, ChevronDown, Phone, Mail, Code as Code2 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { useSession } from "next-auth/react";
 import { usePathname } from "next/navigation";
@@ -82,7 +82,7 @@ export function Navbar() {
 
                         {/* Desktop Nav */}
                         <nav className="hidden md:flex items-center gap-8">
-                            <Link href="/" className="text-sm font-medium text-slate-600 hover:text-indigo-600 transition-colors">
+                            <Link href="/" className="text-sm font-medium text-slate-600 hover:text-blue-600 transition-colors">
                                 Home
                             </Link>
 
@@ -92,7 +92,7 @@ export function Navbar() {
                                 onMouseEnter={() => setShowMegaMenu(true)}
                                 onMouseLeave={() => setShowMegaMenu(false)}
                             >
-                                <button className="flex items-center gap-1 text-sm font-medium text-slate-600 hover:text-indigo-600 transition-colors py-6">
+                                <button className="flex items-center gap-1 text-sm font-medium text-slate-600 hover:text-blue-600 transition-colors py-6">
                                     Explore Courses <ChevronDown className="h-4 w-4" />
                                 </button>
 
@@ -100,38 +100,38 @@ export function Navbar() {
                                 {showMegaMenu && (
                                     <div className="absolute top-full left-0 w-[600px] bg-white shadow-xl rounded-xl border border-slate-100 p-6 animate-in fade-in slide-in-from-top-2 duration-200">
                                         <div className="grid grid-cols-2 gap-x-8 gap-y-4">
-                                            <Link href="/courses/generative-ai" className="group block p-3 rounded-lg hover:bg-indigo-50 transition-colors">
-                                                <div className="font-bold text-slate-900 group-hover:text-indigo-600">Generative AI & Machine Learning</div>
+                                            <Link href="/courses/generative-ai" className="group block p-3 rounded-lg hover:bg-blue-50 transition-colors">
+                                                <div className="font-bold text-slate-900 group-hover:text-blue-600">Generative AI & Machine Learning</div>
                                                 <div className="text-xs text-slate-500">Master GenAI & LLMs</div>
                                             </Link>
-                                            <Link href="/courses/digital-marketing" className="group block p-3 rounded-lg hover:bg-indigo-50 transition-colors">
-                                                <div className="font-bold text-slate-900 group-hover:text-indigo-600">Advanced Digital Marketing</div>
+                                            <Link href="/courses/digital-marketing" className="group block p-3 rounded-lg hover:bg-blue-50 transition-colors">
+                                                <div className="font-bold text-slate-900 group-hover:text-blue-600">Advanced Digital Marketing</div>
                                                 <div className="text-xs text-slate-500">SEO, SEM & Social Media</div>
                                             </Link>
-                                            <Link href="/courses/data-analytics" className="group block p-3 rounded-lg hover:bg-indigo-50 transition-colors">
-                                                <div className="font-bold text-slate-900 group-hover:text-indigo-600">Data Analytics with Python</div>
+                                            <Link href="/courses/data-analytics" className="group block p-3 rounded-lg hover:bg-blue-50 transition-colors">
+                                                <div className="font-bold text-slate-900 group-hover:text-blue-600">Data Analytics with Python</div>
                                                 <div className="text-xs text-slate-500">Data Viz & Insights</div>
                                             </Link>
-                                            <Link href="/courses/financial-modeling" className="group block p-3 rounded-lg hover:bg-indigo-50 transition-colors">
-                                                <div className="font-bold text-slate-900 group-hover:text-indigo-600">Financial Modeling & Valuation</div>
+                                            <Link href="/courses/financial-modeling" className="group block p-3 rounded-lg hover:bg-blue-50 transition-colors">
+                                                <div className="font-bold text-slate-900 group-hover:text-blue-600">Financial Modeling & Valuation</div>
                                                 <div className="text-xs text-slate-500">Excel & Valuation</div>
                                             </Link>
-                                            <Link href="/courses/hr-management" className="group block p-3 rounded-lg hover:bg-indigo-50 transition-colors">
-                                                <div className="font-bold text-slate-900 group-hover:text-indigo-600">Human Resource Management</div>
+                                            <Link href="/courses/hr-management" className="group block p-3 rounded-lg hover:bg-blue-50 transition-colors">
+                                                <div className="font-bold text-slate-900 group-hover:text-blue-600">Human Resource Management</div>
                                                 <div className="text-xs text-slate-500">Recruitment & Payroll</div>
                                             </Link>
-                                            <Link href="/courses/full-stack-development" className="group block p-3 rounded-lg hover:bg-indigo-50 transition-colors">
-                                                <div className="font-bold text-slate-900 group-hover:text-indigo-600">Full Stack Web Development</div>
+                                            <Link href="/courses/full-stack-development" className="group block p-3 rounded-lg hover:bg-blue-50 transition-colors">
+                                                <div className="font-bold text-slate-900 group-hover:text-blue-600">Full Stack Web Development</div>
                                                 <div className="text-xs text-slate-500">MERN Stack</div>
                                             </Link>
                                         </div>
 
-                                        <div className="mt-6 pt-4 border-t border-slate-100 flex justify-between items-center bg-indigo-50 -mx-6 -mb-6 p-4 rounded-b-xl">
+                                        <div className="mt-6 pt-4 border-t border-slate-100 flex justify-between items-center bg-blue-50 -mx-6 -mb-6 p-4 rounded-b-xl">
                                             <div>
                                                 <p className="font-bold text-slate-900 text-sm">Not sure what to choose?</p>
                                                 <p className="text-xs text-slate-600">Get a free career counselling session</p>
                                             </div>
-                                            <Button size="sm" className="bg-indigo-600 hover:bg-indigo-700 text-white">
+                                            <Button size="sm" className="bg-blue-600 hover:bg-blue-700 text-white">
                                                 Book Free Session
                                             </Button>
                                         </div>
@@ -139,10 +139,10 @@ export function Navbar() {
                                 )}
                             </div>
 
-                            <Link href="/blog" className="text-sm font-medium text-slate-600 hover:text-indigo-600 transition-colors">
+                            <Link href="/blog" className="text-sm font-medium text-slate-600 hover:text-blue-600 transition-colors">
                                 Blog
                             </Link>
-                            <Link href="/about-us" className="text-sm font-medium text-slate-600 hover:text-indigo-600 transition-colors">
+                            <Link href="/about-us" className="text-sm font-medium text-slate-600 hover:text-blue-600 transition-colors">
                                 About Us
                             </Link>
                         </nav>
@@ -152,20 +152,20 @@ export function Navbar() {
                         {status === "authenticated" ? (
                             <>
                                 {session?.user?.role === "ADMIN" && (
-                                    <Button variant="outline" className="border-indigo-600 text-indigo-600 hover:bg-indigo-50 font-bold" asChild>
+                                    <Button variant="outline" className="border-blue-600 text-blue-600 hover:bg-blue-50 font-bold" asChild>
                                         <Link href="/admin">Admin Panel</Link>
                                     </Button>
                                 )}
-                                <Button className="bg-indigo-600 hover:bg-indigo-700 text-white font-medium px-6" asChild>
+                                <Button className="bg-blue-600 hover:bg-blue-700 text-white font-medium px-6" asChild>
                                     <Link href="/dashboard">My Dashboard</Link>
                                 </Button>
                             </>
                         ) : (
                             <>
-                                <Button variant="ghost" className="text-indigo-600 hover:text-indigo-700 hover:bg-indigo-50 font-medium" asChild>
+                                <Button variant="ghost" className="text-blue-600 hover:text-blue-700 hover:bg-blue-50 font-medium" asChild>
                                     <Link href="/login">Login</Link>
                                 </Button>
-                                <Button className="bg-indigo-600 hover:bg-indigo-700 text-white font-medium px-6" asChild>
+                                <Button className="bg-blue-600 hover:bg-blue-700 text-white font-medium px-6" asChild>
                                     <Link href="/register">Get Started</Link>
                                 </Button>
                             </>
@@ -211,10 +211,10 @@ export function Navbar() {
                             <Link href="/contact-us" className="text-lg font-medium text-slate-900" onClick={() => setIsOpen(false)}>Contact Us</Link>
 
                             <div className="pt-6 border-t border-slate-100 flex flex-col gap-3">
-                                <Button variant="outline" className="w-full border-indigo-200 text-indigo-600" asChild>
+                                <Button variant="outline" className="w-full border-blue-200 text-blue-600" asChild>
                                     <Link href="/login">Login</Link>
                                 </Button>
-                                <Button className="w-full bg-indigo-600 text-white" asChild>
+                                <Button className="w-full bg-blue-600 text-white" asChild>
                                     <Link href="/register">Get Started</Link>
                                 </Button>
                             </div>
