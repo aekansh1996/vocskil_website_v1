@@ -9,39 +9,30 @@ import { usePathname } from "next/navigation";
 
 const courseCategories = [
     {
-        title: "Data Science & Analytics",
+        title: "Future Tech",
         items: [
-            { name: "Data Science with Python", href: "/courses/data-science" },
-            { name: "Business Analytics", href: "/courses/business-analytics" },
-            { name: "AI & Machine Learning", href: "/courses/ai-ml" },
-            { name: "Tableau & PowerBI", href: "/courses/tableau-powerbi" },
+            { name: "Artificial Intelligence", href: "/courses/ai" },
+            { name: "Generative AI", href: "/courses/generative-ai" },
+            { name: "Data Science", href: "/courses/data-science" },
+            { name: "Machine Learning", href: "/courses/ml" },
         ]
     },
     {
-        title: "Finance & Banking",
+        title: "Business & Digital",
         items: [
-            { name: "Financial Modeling", href: "/courses/financial-modeling" },
-            { name: "Investment Banking", href: "/courses/investment-banking" },
-            { name: "CFA Level 1 Prep", href: "/courses/cfa-prep" },
-            { name: "Corporate Banking", href: "/courses/corporate-banking" },
+            { name: "Digital Marketing", href: "/courses/digital-marketing" },
+            { name: "BFSI & Finance", href: "/courses/bfsi" },
+            { name: "Retail & Sales", href: "/courses/retail" },
+            { name: "Soft Skills", href: "/courses/soft-skills" },
         ]
     },
     {
-        title: "Digital Marketing",
+        title: "Industry Specific",
         items: [
-            { name: "Advanced Digital Marketing", href: "/courses/digital-marketing" },
-            { name: "Social Media Marketing", href: "/courses/social-media" },
-            { name: "SEO & Content Strategy", href: "/courses/seo-content" },
-            { name: "Performance Marketing", href: "/courses/performance-marketing" },
-        ]
-    },
-    {
-        title: "Management & HR",
-        items: [
-            { name: "Human Resource Management", href: "/courses/hr-management" },
-            { name: "Project Management", href: "/courses/project-management" },
-            { name: "Supply Chain Management", href: "/courses/supply-chain" },
-            { name: "Soft Skills & Communication", href: "/courses/soft-skills" },
+            { name: "NEP Skill Credits", href: "/nep-credits" },
+            { name: "Govt Skill Schemes", href: "/government-projects" },
+            { name: "CSR Projects", href: "/csr-projects" },
+            { name: "Vocational Training", href: "/programs" },
         ]
     }
 ];
@@ -61,12 +52,12 @@ export function Navbar() {
             <div className="bg-slate-900 text-slate-300 text-xs py-2 hidden md:block">
                 <div className="container mx-auto px-4 flex justify-between items-center">
                     <div className="flex items-center gap-6">
-                        <Link href="/corporate-training" className="hover:text-white transition-colors">Corporate Training</Link>
-                        <Link href="/hire-from-us" className="hover:text-white transition-colors">Hire From Us</Link>
-                        <Link href="/become-mentor" className="hover:text-white transition-colors">Become a Mentor</Link>
+                        <Link href="/government-projects" className="hover:text-white transition-colors">Government Projects</Link>
+                        <Link href="/csr-projects" className="hover:text-white transition-colors">CSR Projects</Link>
+                        <Link href="/college-partnerships" className="hover:text-white transition-colors">College Partnerships</Link>
                     </div>
                     <div className="flex items-center gap-6">
-                        <span className="flex items-center gap-2"><Phone className="h-3 w-3" /> 908-257-2306</span>
+                        <span className="flex items-center gap-2"><Phone className="h-3 w-3" /> +91 9082572306</span>
                         <span className="flex items-center gap-2"><Mail className="h-3 w-3" /> contact@vocskill.com</span>
                     </div>
                 </div>
@@ -75,75 +66,39 @@ export function Navbar() {
             {/* Main Navbar */}
             <header className="sticky top-0 z-50 w-full border-b bg-white/95 backdrop-blur supports-[backdrop-filter]:bg-white/60">
                 <div className="container mx-auto flex h-20 items-center justify-between px-4">
-                    <div className="flex items-center gap-12">
+                    <div className="flex items-center gap-10">
                         <Link href="/" className="flex items-center space-x-2">
-                            <img src="/images/website_logo/Logo-01.png" alt="Vocskill Logo" className="h-20 w-auto" />
+                            <img src="/images/website_logo/Logo-01.png" alt="Vocskill Logo" className="h-16 w-auto" />
                         </Link>
 
                         {/* Desktop Nav */}
-                        <nav className="hidden md:flex items-center gap-8">
-                            <Link href="/" className="text-sm font-medium text-slate-600 hover:text-blue-600 transition-colors">
+                        <nav className="hidden lg:flex items-center gap-6">
+                            <Link href="/" className="text-sm font-bold text-slate-700 hover:text-blue-600 transition-colors">
                                 Home
                             </Link>
 
-                            {/* Mega Menu Trigger */}
-                            <div
-                                className="relative group"
-                                onMouseEnter={() => setShowMegaMenu(true)}
-                                onMouseLeave={() => setShowMegaMenu(false)}
-                            >
-                                <button className="flex items-center gap-1 text-sm font-medium text-slate-600 hover:text-blue-600 transition-colors py-6">
-                                    Explore Courses <ChevronDown className="h-4 w-4" />
-                                </button>
-
-                                {/* Mega Menu Dropdown */}
-                                {showMegaMenu && (
-                                    <div className="absolute top-full left-0 w-[600px] bg-white shadow-xl rounded-xl border border-slate-100 p-6 animate-in fade-in slide-in-from-top-2 duration-200">
-                                        <div className="grid grid-cols-2 gap-x-8 gap-y-4">
-                                            <Link href="/courses/generative-ai" className="group block p-3 rounded-lg hover:bg-blue-50 transition-colors">
-                                                <div className="font-bold text-slate-900 group-hover:text-blue-600">Generative AI & Machine Learning</div>
-                                                <div className="text-xs text-slate-500">Master GenAI & LLMs</div>
-                                            </Link>
-                                            <Link href="/courses/digital-marketing" className="group block p-3 rounded-lg hover:bg-blue-50 transition-colors">
-                                                <div className="font-bold text-slate-900 group-hover:text-blue-600">Advanced Digital Marketing</div>
-                                                <div className="text-xs text-slate-500">SEO, SEM & Social Media</div>
-                                            </Link>
-                                            <Link href="/courses/data-analytics" className="group block p-3 rounded-lg hover:bg-blue-50 transition-colors">
-                                                <div className="font-bold text-slate-900 group-hover:text-blue-600">Data Analytics with Python</div>
-                                                <div className="text-xs text-slate-500">Data Viz & Insights</div>
-                                            </Link>
-                                            <Link href="/courses/financial-modeling" className="group block p-3 rounded-lg hover:bg-blue-50 transition-colors">
-                                                <div className="font-bold text-slate-900 group-hover:text-blue-600">Financial Modeling & Valuation</div>
-                                                <div className="text-xs text-slate-500">Excel & Valuation</div>
-                                            </Link>
-                                            <Link href="/courses/hr-management" className="group block p-3 rounded-lg hover:bg-blue-50 transition-colors">
-                                                <div className="font-bold text-slate-900 group-hover:text-blue-600">Human Resource Management</div>
-                                                <div className="text-xs text-slate-500">Recruitment & Payroll</div>
-                                            </Link>
-                                            <Link href="/courses/full-stack-development" className="group block p-3 rounded-lg hover:bg-blue-50 transition-colors">
-                                                <div className="font-bold text-slate-900 group-hover:text-blue-600">Full Stack Web Development</div>
-                                                <div className="text-xs text-slate-500">MERN Stack</div>
-                                            </Link>
-                                        </div>
-
-                                        <div className="mt-6 pt-4 border-t border-slate-100 flex justify-between items-center bg-blue-50 -mx-6 -mb-6 p-4 rounded-b-xl">
-                                            <div>
-                                                <p className="font-bold text-slate-900 text-sm">Not sure what to choose?</p>
-                                                <p className="text-xs text-slate-600">Get a free career counselling session</p>
-                                            </div>
-                                            <Button size="sm" className="bg-blue-600 hover:bg-blue-700 text-white">
-                                                Book Free Session
-                                            </Button>
-                                        </div>
-                                    </div>
-                                )}
-                            </div>
-
-                            <Link href="/blog" className="text-sm font-medium text-slate-600 hover:text-blue-600 transition-colors">
-                                Blog
-                            </Link>
-                            <Link href="/about-us" className="text-sm font-medium text-slate-600 hover:text-blue-600 transition-colors">
+                            <Link href="/about-us" className="text-sm font-bold text-slate-700 hover:text-blue-600 transition-colors">
                                 About Us
+                            </Link>
+
+                            <Link href="/programs" className="text-sm font-bold text-slate-700 hover:text-blue-600 transition-colors">
+                                Programs
+                            </Link>
+
+                            <Link href="/government-projects" className="text-sm font-bold text-slate-700 hover:text-blue-600 transition-colors">
+                                Govt Projects
+                            </Link>
+
+                            <Link href="/csr-projects" className="text-sm font-bold text-slate-700 hover:text-blue-600 transition-colors">
+                                CSR Projects
+                            </Link>
+
+                            <Link href="/college-partnerships" className="text-sm font-bold text-slate-700 hover:text-blue-600 transition-colors">
+                                Colleges
+                            </Link>
+
+                            <Link href="/hire-candidates" className="text-sm font-bold text-slate-700 hover:text-blue-600 transition-colors">
+                                Hire
                             </Link>
                         </nav>
                     </div>

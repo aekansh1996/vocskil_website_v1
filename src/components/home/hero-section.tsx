@@ -38,25 +38,24 @@ export function HeroSection() {
                         </div>
 
                         <h1 className="text-5xl md:text-7xl font-bold leading-tight text-slate-900">
-                            In this Fast‑Moving World <br />
-                            <span className="text-transparent bg-clip-text bg-gradient-to-r from-indigo-600 to-violet-600 transition-all duration-500 block h-[1.2em]">
-                                {text}
+                            Bridging Education with <br />
+                            <span className="text-transparent bg-clip-text bg-gradient-to-r from-indigo-700 to-blue-700 transition-all duration-500 block">
+                                Industry Excellence
                             </span>
-                            with Vocskill
                         </h1>
 
-                        <p className="text-xl text-slate-600 max-w-lg leading-relaxed">
-                            Join India's most trusted ed-tech platform for live interactive learning in Management, Finance, and Analytics.
+                        <p className="text-xl text-slate-600 max-w-2xl leading-relaxed">
+                            VocSkill enables colleges to deliver industry relevant training on campus through structured, compliant programs. With hands-on learning, expert faculty, and reliable assessments, students graduate not just qualified but employable.
                         </p>
 
                         <div className="flex flex-col sm:flex-row gap-4 pt-4">
-                            <Button asChild size="lg" className="bg-indigo-600 hover:bg-indigo-700 text-white text-lg px-8 py-6 rounded-xl shadow-lg shadow-indigo-200 hover:shadow-xl hover:-translate-y-1 transition-all duration-300">
-                                <Link href="/contact-us">
-                                    Enquire Now <ArrowRight className="ml-2 h-5 w-5" />
+                            <Button asChild size="lg" className="bg-blue-600 hover:bg-blue-700 text-white text-lg px-8 py-6 rounded-xl shadow-lg shadow-blue-200 hover:shadow-xl hover:-translate-y-1 transition-all duration-300">
+                                <Link href="/partner-with-us">
+                                    Partner With Us <ArrowRight className="ml-2 h-5 w-5" />
                                 </Link>
                             </Button>
-                            <Button asChild size="lg" variant="outline" className="border-slate-200 text-slate-700 hover:bg-slate-50 hover:text-indigo-600 text-lg px-8 py-6 rounded-xl">
-                                <Link href="/programs">Explore Courses</Link>
+                            <Button asChild size="lg" variant="outline" className="border-slate-200 text-slate-700 hover:bg-slate-50 hover:text-blue-600 text-lg px-8 py-6 rounded-xl">
+                                <Link href="/programs">Explore Programs</Link>
                             </Button>
                         </div>
 
@@ -87,8 +86,8 @@ export function HeroSection() {
                                     <CheckCircle2 className="h-8 w-8 text-green-600" />
                                 </div>
                                 <div>
-                                    <p className="text-2xl font-bold text-slate-900">10k+</p>
-                                    <p className="text-sm text-slate-500">Careers Transformed</p>
+                                    <p className="text-2xl font-bold text-slate-900">5000+</p>
+                                    <p className="text-sm text-slate-500">Students Trained</p>
                                 </div>
                             </div>
                         </div>

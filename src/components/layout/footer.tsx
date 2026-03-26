@@ -15,39 +15,39 @@ export function Footer() {
                 <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-12 mb-12">
                     {/* About */}
                     <div className="space-y-4">
-                        <h3 className="text-2xl font-bold text-indigo-600">Vocskill</h3>
-                        <p className="text-slate-500 leading-relaxed">
-                            Empowering careers through industry-led training in Management, Finance, and Analytics. Join the revolution in ed-tech.
+                        <h3 className="text-2xl font-bold text-blue-600">VocSkill</h3>
+                        <p className="text-slate-500 leading-relaxed text-sm">
+                            VocSkill Educational Private Limited is a government-recognized skill development and training organization working across colleges, government projects, and corporate CSR initiatives to create job-ready youth.
                         </p>
                         <div className="flex gap-4 pt-2">
-                            <Link href="#" className="text-slate-400 hover:text-indigo-600 transition-colors"><Facebook className="h-5 w-5" /></Link>
-                            <Link href="#" className="text-slate-400 hover:text-indigo-600 transition-colors"><Twitter className="h-5 w-5" /></Link>
-                            <Link href="#" className="text-slate-400 hover:text-indigo-600 transition-colors"><Instagram className="h-5 w-5" /></Link>
-                            <Link href="#" className="text-slate-400 hover:text-indigo-600 transition-colors"><Linkedin className="h-5 w-5" /></Link>
+                            <Link href="#" className="text-slate-400 hover:text-blue-600 transition-colors"><Facebook className="h-5 w-5" /></Link>
+                            <Link href="#" className="text-slate-400 hover:text-blue-600 transition-colors"><Twitter className="h-5 w-5" /></Link>
+                            <Link href="#" className="text-slate-400 hover:text-blue-600 transition-colors"><Instagram className="h-5 w-5" /></Link>
+                            <Link href="#" className="text-slate-400 hover:text-blue-600 transition-colors"><Linkedin className="h-5 w-5" /></Link>
                         </div>
                     </div>
 
                     {/* Quick Links */}
                     <div>
-                        <h4 className="font-bold text-slate-900 mb-6">Company</h4>
+                        <h4 className="font-bold text-slate-900 mb-6">Explore</h4>
                         <ul className="space-y-3">
-                            <li><Link href="/about-us" className="text-slate-500 hover:text-indigo-600 transition-colors">About Us</Link></li>
-                            <li><Link href="/careers" className="text-slate-500 hover:text-indigo-600 transition-colors">Careers</Link></li>
-                            <li><Link href="/corporate-training" className="text-slate-500 hover:text-indigo-600 transition-colors">Corporate Training</Link></li>
-                            <li><Link href="/become-mentor" className="text-slate-500 hover:text-indigo-600 transition-colors">Become a Mentor</Link></li>
-                            <li><Link href="/contact-us" className="text-slate-500 hover:text-indigo-600 transition-colors">Contact Us</Link></li>
+                            <li><Link href="/about-us" className="text-slate-500 hover:text-blue-600 transition-colors text-sm">About Us</Link></li>
+                            <li><Link href="/programs" className="text-slate-500 hover:text-blue-600 transition-colors text-sm">Our Programs</Link></li>
+                            <li><Link href="/government-projects" className="text-slate-500 hover:text-blue-600 transition-colors text-sm">Government Projects</Link></li>
+                            <li><Link href="/csr-projects" className="text-slate-500 hover:text-blue-600 transition-colors text-sm">CSR Projects</Link></li>
+                            <li><Link href="/college-partnerships" className="text-slate-500 hover:text-blue-600 transition-colors text-sm">College Partnerships</Link></li>
                         </ul>
                     </div>
 
                     {/* Resources */}
                     <div>
-                        <h4 className="font-bold text-slate-900 mb-6">Resources</h4>
+                        <h4 className="font-bold text-slate-900 mb-6">Partners</h4>
                         <ul className="space-y-3">
-                            <li><Link href="/blog" className="text-slate-500 hover:text-indigo-600 transition-colors">Blog</Link></li>
-                            <li><Link href="/success-stories" className="text-slate-500 hover:text-indigo-600 transition-colors">Success Stories</Link></li>
-                            <li><Link href="/webinars" className="text-slate-500 hover:text-indigo-600 transition-colors">Free Webinars</Link></li>
-                            <li><Link href="/career-guide" className="text-slate-500 hover:text-indigo-600 transition-colors">Career Guide</Link></li>
-                            <li><Link href="/faqs" className="text-slate-500 hover:text-indigo-600 transition-colors">FAQs</Link></li>
+                            <li><Link href="/partner-with-us" className="text-slate-500 hover:text-blue-600 transition-colors text-sm">Partner With Us</Link></li>
+                            <li><Link href="/hire-candidates" className="text-slate-500 hover:text-blue-600 transition-colors text-sm">Hire Skilled Talent</Link></li>
+                            <li><Link href="/contact-us" className="text-slate-500 hover:text-blue-600 transition-colors text-sm">Contact Support</Link></li>
+                            <li><Link href="/blog" className="text-slate-500 hover:text-blue-600 transition-colors text-sm">Blog & News</Link></li>
+                            <li><Link href="/faqs" className="text-slate-500 hover:text-blue-600 transition-colors text-sm">Common FAQs</Link></li>
                         </ul>
                     </div>
 
@@ -60,8 +60,8 @@ export function Footer() {
                                 <span className="text-slate-500">Bharati Vidyapeeth Institute of Management Studies and Research, Bharati Vidyapeeth University, Sector- 8, CBD Belapur, Navi Mumbai., Maharashtra, 400614</span>
                             </li>
                             <li className="flex items-center gap-3">
-                                <Phone className="h-5 w-5 text-indigo-600 shrink-0" />
-                                <span className="text-slate-500">908-257-2306</span>
+                                <Phone className="h-5 w-5 text-blue-600 shrink-0" />
+                                <span className="text-slate-500">+91 9082572306</span>
                             </li>
                             <li className="flex items-center gap-3">
                                 <Mail className="h-5 w-5 text-indigo-600 shrink-0" />
